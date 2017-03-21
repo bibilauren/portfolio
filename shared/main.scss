@@ -1,0 +1,186 @@
+// Edlio SASS main.scss
+// This version breaks files into base, mixins, and settings
+// main.scss contains all the SASS specific to the individual school. Unique mixins are fine.
+// Feel free to move around the various blocks so that they make more sense to the page structure of the site in question.
+
+
+// Imports - Order is important
+// ------------------------------------------------------------
+
+@import "sass/settings";
+@import "sass/flexbox";
+@import "sass/mixins";
+@import "sass/base";
+
+
+// Initializing fonts/sizes
+// ------------------------------------------------------------
+
+body, body .dark, body .light, body table, body .neutral, body .pale {
+	font-family: $primary-font;
+	font-size: 100%;
+}
+
+// High level structure
+// ------------------------------------------------------------
+
+html {
+	@include sticky-footer-layout;
+	background: $jack-white; 
+}
+
+body {	
+	background-color: $jack-white;
+	color: $jack-black; 
+}
+
+body, #footer_main { min-width: $vp-small; }
+
+// Header components
+// ------------------------------------------------------------
+
+// Main components
+// ------------------------------------------------------------
+
+#cards {
+	@include flex-all(row, center, center, wrap);
+
+	.item {
+		overflow: hidden;
+		margin: 10px;
+		position: relative;
+		border: 10px solid rgba(lighten($macy-grey, 20%), .1);
+		box-shadow: 0 0 5px rgba($macy-grey, .7);
+		max-width: 300px;
+		width: 100%;
+
+		&:hover,
+		&:focus {
+			.item {
+				&-inner { 
+					opacity: 1;
+					top: 0; 
+				}
+
+				&-position {
+					opacity: 1;
+					top: -10px;
+					right: -10px;
+				}
+			}
+		}
+
+		&-inner {
+			@include flex-all($direction: column, $justify: center, $align: center);
+			padding: 20px;
+			opacity: 0;
+			position: absolute;
+			z-index: 2;
+			top: 100%;
+			background-color: rgba($red-fox, .9);
+			width: calc(100% - 40px);
+			height: calc(100% - 40px);
+			transition: all .5s ease-in-out;
+
+			&:after {
+				content: "";
+				position: absolute;
+				top: -110%;
+				left: -210%;
+				width: 200%;
+				height: 200%;
+				opacity: 0;
+				transform: rotate(30deg);
+				background: rgba($jack-white, 0.13);
+				background: linear-gradient(to right, 
+					rgba($jack-white, 0.13) 0%,
+					rgba($jack-white, 0.13) 77%,
+					rgba($jack-white, 0.5) 92%,
+					rgba($jack-white, 0.0) 100%
+				);
+				transition: all .5s ease-in-out .5s;
+			}
+
+			&:hover,
+			&:focus {
+				&:after {
+					opacity: 1;
+					top: -30%;
+					left: -30%;
+					transition-property: left, top, opacity;
+					transition-duration: 0.7s, 0.7s, 0.15s;
+					transition-timing-function: ease;
+				}
+			}
+		}
+
+		&-name {
+			margin: 0;
+			position: relative;
+			z-index: 2;
+			color: $jack-white;
+			text-align: center;
+			line-height: 1;
+
+			a, a:link { 
+				color: $jack-white; 
+				text-decoration: none;
+				transition: color .5s ease-in-out;
+
+				&:hover,
+				&:focus { color: darken($macy-grey, 70%); }
+			}
+		}
+
+		&-position {
+			@include flex-all($justify: center, $align: center);
+			opacity: 0;
+			position: absolute;
+			top: -100px;
+			right: -100px;
+			color: $red-fox;
+			background-color: $jack-white;
+			border-radius: 99em;
+			box-shadow: 0 0 10px rgba($jack-black, .4);
+			width: 30px;
+			height: 30px;
+			transition: all .8s ease-in .4s;
+		}
+
+		&-description { 
+			@include flex-all($direction: column, $align: center);
+			color: $jack-white; 
+			text-align: center;
+
+			strong { 
+				display: inline-block; 
+				color: rgba($jack-white, .7);
+				border-top: 1px solid rgba($jack-white, .7);
+				border-bottom: 1px solid rgba($jack-white, .7);
+			}
+		}
+
+		&-link {
+			display: table;
+			margin-top: 10px;
+			padding: 5px 10px;
+			position: relative;
+			z-index: 2;
+			color: $red-fox;
+			background-color: $jack-white;
+			box-shadow: 0 0 10px rgba($jack-black, .4);
+			text-decoration: none;
+			transition: all .5s ease-in-out;
+
+			&:hover,
+			&:focus { 
+				color: $jack-white;
+				background-color: darken($macy-grey, 70%); 
+			}
+		}
+	}
+}
+
+// Footer components
+// ------------------------------------------------------------
+

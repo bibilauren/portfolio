@@ -1,0 +1,9 @@
+preferred_syntax = :scss
+http_path = '/'
+css_dir = 'shared'
+sass_dir = 'shared'
+images_dir = 'pics'
+relative_assets = true
+line_comments = true
+output_style = :compressed
+cache_path = '../.sass-cache'

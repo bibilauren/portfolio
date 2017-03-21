@@ -1,0 +1,217 @@
+// ------------------------------------------------------------
+// Mixins
+// ------------------------------------------------------------
+// These are for general utility mixins.  Those that are based on Edlio naming conventions, site blocking and layout, or specific features should be added to _base.scss instead
+
+// -------------------------------------------------------
+// List styles
+// -------------------------------------------------------
+
+// remove the default styling from a list
+@mixin stripped-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+// -------------------------------------------------------
+// Links
+// -------------------------------------------------------
+	
+// remove any underline and re-add it on hover
+@mixin underline-link {
+	text-decoration: none;
+	
+	&:hover { text-decoration: underline; }
+}
+	
+// -------------------------------------------------------
+// SVG icons
+// -------------------------------------------------------
+	
+// turns a link into a specifically sized and colored SVG-based icon with option to be rounded
+@mixin svg-icon($width: auto, $height: auto, $padding: 0, $fill-color: $jack-black, $background-color: transparent, $round: false) {
+	display: block;
+	width: $width;
+	height: $height;
+	overflow: hidden;
+	background-color: $background-color;
+	
+	@if $round == true { border-radius: 100%; }
+	
+	svg {
+		$space: $padding * 2;
+		display: block;
+		width: ($width - $space);
+		height: ($height - $space);
+		margin: $padding;
+		fill: $fill-color;
+	}
+}
+	
+// -------------------------------------------------------
+// Alignment and general positioning
+// -------------------------------------------------------
+
+// Clear fix
+@mixin clearfix {
+	&:before, &:after {
+		content: "";
+		display: table;
+	}
+	
+	&:after { clear: both; }
+}
+
+// Swap an element's content out with a specified background image
+@mixin image-replace($width, $height, $image: null) {
+	display: block;
+	overflow: hidden;
+	height: $height;
+	width: $width;
+	white-space: nowrap;
+	text-indent: 200%;
+	color: transparent;
+	background: {
+		position: center center;
+		repeat: no-repeat;
+	}
+	
+	@if $image != null {
+		background-image: url('#{$image}');
+	}
+}
+
+// An effectively hidden element that is visible to screen readers because it is 1px
+@mixin hidden { 
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+}
+
+// Centers an element and clips portions that overflow the viewport
+// Applied to the parent of the element intended to be centered, whose ID is passed as a parameter.
+@mixin large-centered($element) {
+	position: relative;
+	overflow: hidden;
+	
+	#{$element} {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		-webkit-transform: translateX(-50%);
+		-ms-transform: translateX(-50%);
+		margin: 0 auto;
+	}
+}
+
+// simple and responsive-friendly way to make something full width but stop expanding at a certain spot
+// Takes an optional $padding variable which allows for more flexibility. 
+// NOTE: padding amount must be declared in your main styling as well (in case you want it to be asymmetrical or something)
+@mixin width-constrain($width: $site-width, $padding: null) {
+	margin: {
+		left: auto;
+		right: auto;
+	}
+	
+	@if $padding != null {
+		width: calc(100% - #{$padding});
+		max-width: calc(#{$width} - #{$padding});
+	} @else {
+		width: 100%;
+		max-width: $width;
+	}
+}
+
+@mixin rotate($rotate) {
+	-webkit-transform: rotate($rotate);
+	transform: rotate($rotate);
+}
+
+// -------------------------------------------------------
+// Media queries
+// -------------------------------------------------------
+
+
+// Reference widths from settings file
+@mixin respond-to($media-min) {
+	@media screen and (min-width: $media-min) {
+		@content;
+	}
+}
+
+@mixin respond-to-max($media-max) {
+	@media screen and (max-width: $media-max - 1px) {
+		@content;
+	}
+}
+
+
+@mixin respond-to-min-max($media-min, $media-max) {
+	@media screen and (min-width: $media-min) and (max-width: $media-max - 1px) {
+		@content;
+	}
+}
+
+// simple one-line declarations to hide something UP TO a specific width
+@mixin hide-to($width) {
+	@include respond-to-max($width) { display: none; }
+}
+
+@mixin hide-small{
+	@include hide-to($vp-mid);
+}
+
+@mixin hide-mid{
+	@include hide-to($vp-large);
+}
+
+@mixin hide-large{
+	@include hide-to($vp-max);
+}
+
+
+// -------------------------------------------------------
+// Retina images
+// -------------------------------------------------------
+
+// Usage: Send path, image name, and width and height. 
+// Name retina images [name]2x.
+
+@mixin image-2x($image, $width, $height) {
+	@media (min--moz-device-pixel-ratio: 1.3),
+	(-o-min-device-pixel-ratio: 2.6/2),
+	(-webkit-min-device-pixel-ratio: 1.3),
+	(min-device-pixel-ratio: 1.3),
+	(min-resolution: 1.3dppx) {
+	/* on retina, use image that's scaled by 2 */
+		background-image: url($image);
+		background-size: $width $height;
+	}
+}
+
+
+// -------------------------------------------------------
+// Color functions
+// -------------------------------------------------------
+
+// ------------------------------------------------------------
+// Functions for px to em conversions
+// ------------------------------------------------------------
+
+@function emify($target, $context) {
+	@if $target == 0 { @return 0 }
+	@return $target / $context + 0em;
+}
+
+// Make px to ems using base-font-size 
+// echo as: font-size: em-font(#px);
+
+@function em-font($target, $context: $base-font-size) {
+	@return emify($target, $context);
+}

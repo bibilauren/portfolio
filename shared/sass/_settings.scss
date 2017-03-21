@@ -1,0 +1,71 @@
+// ------------------------------------------------------------
+// Settings
+
+// :: Sizing
+// :: Breakpoints
+// :: Colors
+// :: Typography
+// ------------------------------------------------------------
+
+
+// ------------------------------------------------------------
+// :: Breakpoints
+// ------------------------------------------------------------
+
+// Defining viewport sizes.	 This could get more complex as we grow, but for now we are using three.
+
+$vp-small				: 320px;	// small size 
+$vp-mid					: 768px;	// mid size
+$vp-large				: 1024px;	// large size
+
+$vp-max					: 1350px;	// max viewport. Syntactically makes for a nicer option
+
+
+// ------------------------------------------------------------
+// :: Sizing
+// ------------------------------------------------------------
+
+$site-width				: $vp-large;
+$header-height			: 185px;
+$footer-height			: 243px;
+
+$header-height-mid		: $header-height;
+$footer-height-mid		: $footer-height;
+
+$header-height-small	: 135px;
+$footer-height-small	: 146px;
+
+
+// ------------------------------------------------------------
+// :: Colors
+// ------------------------------------------------------------
+
+// Define the main colour palette
+// In a DWS these can be redefined safely per individual campus
+$jack-black				: rgb(0,0,0);
+$jack-white				: rgb(255,255,255);
+$macy-grey				: rgb(204,204,204);
+$ron-burgundy			: rgb(70,0,0);
+$al-green				: rgb(103,178,177);
+$beige-ruth				: rgb(240,240,236);
+$agent-orange			: rgb(210,144,34);
+$betty-blue				: rgb(57,3,199);
+$red-fox				: rgb(146,21,15);
+$yellow-ono				: rgb(207,190,108);
+
+
+// ------------------------------------------------------------
+// :: Typography
+// ------------------------------------------------------------
+
+// Import google fonts or define webfonts from uploaded files
+// Should be uniform across DWS sites for browser security reasons
+@import url("//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic|Oswald|Permanent+Marker");
+
+// list our fonts
+$primary-font			: "Open Sans", sans-serif;
+$secondary-font			: "Oswald", sans-serif;
+$tertiary-font			: "Permanent Marker", cursive;
+$too-many-fonts			: "";
+
+$base-font-size			: 16px;
